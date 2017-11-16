@@ -169,12 +169,12 @@ func (action *TradeAggregateIndexAction) loadPage() {
 		action.Page.Add(res)
 	}
 
-	action.Page.BaseURL = action.BaseURL()
-	action.Page.BasePath = action.Path()
 	action.Page.Limit = action.PagingParams.Limit
 	action.Page.Order = action.PagingParams.Order
 
-	newUrl := action.R.URL //build links on top of existing request, preserving scheme, host, path and query params
+	newUrl := action.BaseURL() // preserve scheme and host for the new url links
+	newUrl.RawQuery = action.R.URL.RawQuery //preserve query parameters
+	newUrl.Path = action.Path() //preserve path
 	q := newUrl.Query()
 
 	action.Page.Links.Self = hal.NewLink(newUrl.String())
@@ -191,7 +191,6 @@ func (action *TradeAggregateIndexAction) loadPage() {
 			q.Set("start_time", strconv.FormatInt(newStartTime, 10))
 			newUrl.RawQuery = q.Encode()
 			action.Page.Links.Next = hal.NewLink(newUrl.String())
-
 		} else { //desc
 			newEndTime := action.Records[len(action.Records)-1].Timestamp
 			if newEndTime <= action.StartTimeFilter.ToInt64() {
