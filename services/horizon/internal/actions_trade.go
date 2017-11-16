@@ -174,9 +174,10 @@ func (action *TradeAggregateIndexAction) loadPage() {
 	action.Page.Limit = action.PagingParams.Limit
 	action.Page.Order = action.PagingParams.Order
 
-	q := action.R.URL.Query() //build on top of existing query params, this takes care of all the filters
-	base := action.Page.BasePath
-	action.Page.Links.Self = hal.NewLink(base + "?" + q.Encode())
+	newUrl := action.R.URL //build links on top of existing request, preserving scheme, host, path and query params
+	q := newUrl.Query()
+
+	action.Page.Links.Self = hal.NewLink(newUrl.String())
 
 	//adjust time range for next page
 	if uint64(len(action.Records)) == 0 {
@@ -188,7 +189,8 @@ func (action *TradeAggregateIndexAction) loadPage() {
 				newStartTime = action.EndTimeFilter.ToInt64()
 			}
 			q.Set("start_time", strconv.FormatInt(newStartTime, 10))
-			action.Page.Links.Next = hal.NewLink(base + "?" + q.Encode())
+			newUrl.RawQuery = q.Encode()
+			action.Page.Links.Next = hal.NewLink(newUrl.String())
 
 		} else { //desc
 			newEndTime := action.Records[len(action.Records)-1].Timestamp
@@ -196,7 +198,8 @@ func (action *TradeAggregateIndexAction) loadPage() {
 				newEndTime = action.StartTimeFilter.ToInt64()
 			}
 			q.Set("end_time", strconv.FormatInt(newEndTime, 10))
-			action.Page.Links.Next = hal.NewLink(base + "?" + q.Encode())
+			newUrl.RawQuery = q.Encode()
+			action.Page.Links.Next = hal.NewLink(newUrl.String())
 		}
 	}
 }
