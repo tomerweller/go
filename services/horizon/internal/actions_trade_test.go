@@ -161,7 +161,7 @@ func TestTradeActions_Aggregation(t *testing.T) {
 	w = ht.GetWithParams(aggregationPath, q)
 	nextLink = ht.UnmarshalNext(w.Body)
 	//make sure the next link is a full url and not just a path
-	ht.Assert.Equal(true, strings.HasPrefix(nextLink, "http"))
+	ht.Assert.Equal(true, strings.HasPrefix(nextLink, "http://localhost"))
 	w = ht.Get(nextLink)
 	if ht.Assert.Equal(200, w.Code) {
 		ht.Assert.PageOf(numOfTrades/2-limit, w.Body)
