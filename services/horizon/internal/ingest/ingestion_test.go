@@ -74,8 +74,8 @@ func TestAssetIngest(t *testing.T) {
 }
 
 func TestTradeIngestTimestamp(t *testing.T) {
-	//ingest trade scenario and make verify that the trade
-	//timestamp matches the appropriate ledger's timestamp
+	//ingest trade scenario and verify that the trade timestamp
+	//matches the appropriate ledger's timestamp
 	tt := test.Start(t).ScenarioWithoutHorizon("trades")
 	defer tt.Finish()
 	s := ingest(tt)
