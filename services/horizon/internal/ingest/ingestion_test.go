@@ -10,7 +10,6 @@ import (
 	"github.com/stellar/go/services/horizon/internal/test"
 	"github.com/stellar/go/services/horizon/internal/db2/history"
 	"github.com/stretchr/testify/assert"
-	"fmt"
 )
 
 func TestEmptySignature(t *testing.T) {
@@ -75,13 +74,12 @@ func TestAssetIngest(t *testing.T) {
 }
 
 func TestTradeIngestTimestamp(t *testing.T) {
-	//ingest trade scenario and make sure the trade timestamps matches
-	//the appropriate ledger's timestamp
+	//ingest trade scenario and make verify that the trade
+	//timestamp matches the appropriate ledger's timestamp
 	tt := test.Start(t).ScenarioWithoutHorizon("trades")
 	defer tt.Finish()
 	s := ingest(tt)
 	q := history.Q{Session: s.Ingestion.DB}
-	fmt.Println(s.Ingestion.DB.DB.DB)
 
 	var ledgers []history.Ledger
 	err := q.Ledgers().Select(&ledgers)
