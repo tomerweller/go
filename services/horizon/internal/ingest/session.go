@@ -314,6 +314,9 @@ func (is *Session) ingestEffects() {
 
 		effects.Add(source, effect, dets)
 
+	case xdr.OperationTypeBumpSequence:
+		//TODO :do
+
 	default:
 		is.Err = fmt.Errorf("Unknown operation type: %s", is.Cursor.OperationType())
 		return
@@ -738,6 +741,8 @@ func (is *Session) operationDetails() map[string]interface{} {
 		} else {
 			details["value"] = nil
 		}
+	case xdr.OperationTypeBumpSequence:
+		//TODO: DO
 	default:
 		panic(fmt.Errorf("Unknown operation type: %s", c.OperationType()))
 	}
