@@ -7,11 +7,7 @@ import (
 
 // TradeAggregationsPage returns a list of aggregated trade records, aggregated by resolution
 type TradeAggregationsPage struct {
-	Links struct {
-		Self hal.Link `json:"self"`
-		Next hal.Link `json:"next"`
-		Prev hal.Link `json:"prev"`
-	} `json:"_links"`
+	Links hal.Links `json:"_links"`
 	Embedded struct {
 		Records []TradeAggregation `json:"records"`
 	} `json:"_embedded"`
@@ -19,22 +15,14 @@ type TradeAggregationsPage struct {
 
 // TradesPage returns a list of trade records
 type TradesPage struct {
-	Links struct {
-		Self hal.Link `json:"self"`
-		Next hal.Link `json:"next"`
-		Prev hal.Link `json:"prev"`
-	} `json:"_links"`
+	Links hal.Links `json:"_links"`
 	Embedded struct {
 		Records []Trade `json:"records"`
 	} `json:"_embedded"`
 }
 
 type OffersPage struct {
-	Links struct {
-		Self hal.Link `json:"self"`
-		Next hal.Link `json:"next"`
-		Prev hal.Link `json:"prev"`
-	} `json:"_links"`
+	Links hal.Links `json:"_links"`
 	Embedded struct {
 		Records []Offer `json:"records"`
 	} `json:"_embedded"`
