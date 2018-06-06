@@ -103,6 +103,16 @@ func TestTradeActions_Index(t *testing.T) {
 		ht.Assert.PageOf(2, w.Body)
 	}
 
+	// for other account
+	w = ht.Get("/accounts/GCXKG6RN4ONIEPCMNFB732A436Z5PNDSRLGWK7GBLCMQLIFO4S7EYWVU/trades")
+	if ht.Assert.Equal(200, w.Code) {
+		ht.Assert.PageOf(2, w.Body)
+		records := []map[string]interface{}{}
+		ht.UnmarshalPage(w.Body, &records)
+		ht.Assert.Contains(records[0], "base_amount")
+		ht.Assert.Contains(records[0], "counter_amount")
+	}
+
 	//test paging from account 1
 	w = ht.Get("/accounts/GA5WBPYA5Y4WAEHXWR2UKO2UO4BUGHUQ74EUPKON2QHV4WRHOIRNKKH2/trades?order=desc&limit=1")
 	var links hal.Links
@@ -115,7 +125,6 @@ func TestTradeActions_Index(t *testing.T) {
 	if ht.Assert.Equal(200, w.Code) {
 		ht.Assert.PageOf(1, w.Body)
 		prevRecord := records[0]
-		println(prevRecord.CounterAccount)
 		links = ht.UnmarshalPage(w.Body, &records)
 		ht.Assert.NotEqual(prevRecord, records[0])
 	}
