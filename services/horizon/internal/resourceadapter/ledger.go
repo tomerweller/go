@@ -19,6 +19,7 @@ func PopulateLedger(ctx context.Context, dest *Ledger, row history.Ledger) {
 	dest.PrevHash = row.PreviousLedgerHash.String
 	dest.Sequence = row.Sequence
 	dest.TransactionCount = row.TransactionCount
+	dest.FailedTransactionCount = row.FailedTransactionCount
 	dest.OperationCount = row.OperationCount
 	dest.ClosedAt = row.ClosedAt
 	dest.TotalCoins = amount.String(xdr.Int64(row.TotalCoins))

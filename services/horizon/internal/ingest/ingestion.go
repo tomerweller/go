@@ -177,7 +177,8 @@ func (ingest *Ingestion) UpdateAccountIDs(tables []TableName) error {
 func (ingest *Ingestion) Ledger(
 	id int64,
 	header *core.LedgerHeader,
-	txs int,
+	successTxs int,
+	failedTxs int,
 	ops int,
 ) {
 	ingest.builders[LedgersTableName].Values(
@@ -194,7 +195,8 @@ func (ingest *Ingestion) Ledger(
 		time.Unix(header.CloseTime, 0).UTC(),
 		time.Now().UTC(),
 		time.Now().UTC(),
-		txs,
+		successTxs,
+		failedTxs,
 		ops,
 		header.Data.LedgerVersion,
 		header.DataXDR(),
@@ -367,6 +369,7 @@ func (ingest *Ingestion) createInsertBuilders() {
 			"created_at",
 			"updated_at",
 			"transaction_count",
+			"failed_transaction_count",
 			"operation_count",
 			"protocol_version",
 			"ledger_header",
