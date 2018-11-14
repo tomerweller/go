@@ -18,7 +18,8 @@ func PopulateLedger(ctx context.Context, dest *Ledger, row history.Ledger) {
 	dest.Hash = row.LedgerHash
 	dest.PrevHash = row.PreviousLedgerHash.String
 	dest.Sequence = row.Sequence
-	dest.TransactionCount = row.TransactionCount
+	dest.TransactionCount = row.SuccessfulTransactionCount
+	dest.SuccessfulTransactionCount = row.SuccessfulTransactionCount
 	dest.FailedTransactionCount = row.FailedTransactionCount
 	dest.OperationCount = row.OperationCount
 	dest.ClosedAt = row.ClosedAt
