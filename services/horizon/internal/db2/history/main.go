@@ -27,6 +27,7 @@ const (
 	// EffectAccountDebited effects occur when an account sends some currency
 	EffectAccountDebited EffectType = 3 // from create_account, payment, path_payment, create_account
 
+
 	// EffectAccountThresholdsUpdated effects occur when an account changes its
 	// multisig thresholds.
 	EffectAccountThresholdsUpdated EffectType = 4 // from set_options
@@ -181,7 +182,7 @@ type Ledger struct {
 	LedgerHash                 string      `db:"ledger_hash"`
 	PreviousLedgerHash         null.String `db:"previous_ledger_hash"`
 	SuccessfulTransactionCount int32       `db:"successful_transaction_count"`
-	FailedTransactionCount     int32       `db:"failed_transaction_count"`
+	FailedTransactionCount     *int32      `db:"failed_transaction_count"`
 	OperationCount             int32       `db:"operation_count"`
 	ClosedAt                   time.Time   `db:"closed_at"`
 	CreatedAt                  time.Time   `db:"created_at"`

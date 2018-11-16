@@ -157,7 +157,7 @@ type Ledger struct {
 	Sequence                   int32     `json:"sequence"`
 	TransactionCount           int32     `json:"transaction_count"` // DEPRECATED: use SuccessfulTransactionCount
 	SuccessfulTransactionCount int32     `json:"successful_transaction_count"`
-	FailedTransactionCount     int32     `json:"failed_transaction_count"`
+	FailedTransactionCount     *int32    `json:"failed_transaction_count"`
 	OperationCount             int32     `json:"operation_count"`
 	ClosedAt                   time.Time `json:"closed_at"`
 	TotalCoins                 string    `json:"total_coins"`
