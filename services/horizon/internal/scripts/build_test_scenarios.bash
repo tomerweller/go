@@ -21,7 +21,7 @@ export SKIP_CURSOR_UPDATE="true"
 for i in $PACKAGES; do
   CORE_SQL="${i%.rb}-core.sql"
   HORIZON_SQL="${i%.rb}-horizon.sql"
-  bundle exec scc -r $i --dump-root-db > $CORE_SQL
+  bundle exec scc --stellar-core-bin /Users/bartek/stellar-core/src/stellar-core -r $i --dump-root-db > $CORE_SQL
 
   # load the core scenario
   psql $STELLAR_CORE_DATABASE_URL < $CORE_SQL
